@@ -5,6 +5,10 @@ body {
     padding: 20px;
 }
 
+.title{
+    color: yellow;
+}
+
 .nes-container {
     margin: 0 auto;
     padding: 20px;
