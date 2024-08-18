@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const dataURL = canvas.toDataURL('image/png');
         const link = document.createElement('a');
         link.href = dataURL;
-        link.download = 'sticker-builder.png';
+        link.download = 'heheh.png';
         link.click();
     });
 
