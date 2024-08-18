@@ -1,0 +1,62 @@
+body {
+    font-family: 'Press Start 2P', cursive;
+    background-color: #c0c0c0;
+    margin: 0;
+    padding: 20px;
+}
+
+.nes-container {
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    color: #000;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#sticker-panel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.sticker {
+    width: 80px;
+    height: auto;
+    border: 2px solid yellow;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button {
+    margin-top: 20px;
+}
+
+.nes-btn.is-primary {
+    background-color: yellow;
+    color: black;
+}
+
+.nes-btn.is-warning {
+    background-color: orange;
+    color: black;
+}
+
+.nes-btn {
+    margin: 5px;
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+}
