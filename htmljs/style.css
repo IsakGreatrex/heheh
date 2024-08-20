@@ -5,6 +5,10 @@ body {
     padding: 20px;
 }
 
+h2{
+    color: red;
+}
+
 .title{
     color: yellow;
 }

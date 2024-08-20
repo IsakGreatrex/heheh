@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const canvas = new fabric.Canvas('nft-canvas');
+    console.log('Canvas created');
     let baseImage = null;
 
     // Handle image upload for the canvas
@@ -36,6 +37,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // Handle sticker upload
     document.getElementById('stickerUploader').addEventListener('change', function (e) {
         const reader = new FileReader();
+
+        console.log('Sticker uploader');
+
         reader.onload = function (event) {
             const stickerImg = new Image();
             stickerImg.src = event.target.result;
@@ -45,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 stickerElement.className = 'sticker';
                 stickerElement.draggable = true;
                 document.getElementById('sticker-panel').appendChild(stickerElement);
+                
 
                 // Add dragstart event to the newly added sticker
                 stickerElement.addEventListener('dragstart', function (e) {
@@ -66,10 +71,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Handle drag and drop for stickers
     canvas.wrapperEl.addEventListener('dragover', function (e) {
+        console.log('Dragover uploader');
+
         e.preventDefault(); // Necessary to allow drop
     });
 
     canvas.wrapperEl.addEventListener('drop', function (e) {
+        console.log('Drop uploader');
         e.preventDefault();
         const src = e.dataTransfer.getData('text');
         const stickerSize = parseFloat(e.dataTransfer.getData('stickerSize'));
@@ -97,6 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Handle Save button click
     document.getElementById('saveButton').addEventListener('click', function () {
+        console.log('save button clicked');
         const dataURL = canvas.toDataURL('image/png');
         const link = document.createElement('a');
         link.href = dataURL;
@@ -108,6 +117,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('addTextButton').addEventListener('click', function () {
         const topText = prompt("Enter top text:");
         const bottomText = prompt("Enter bottom text:");
+        console.log('addTextButton clicked');
 
         if (topText) {
             const topTextObj = new fabric.Text(topText, {
@@ -146,23 +156,42 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Apply deepfry filters based on slider values
     function applyDeepfryerEffect() {
-        if (baseImage) {
-            const brightness = parseFloat(document.getElementById('brightnessSlider').value);
-            const contrast = parseFloat(document.getElementById('contrastSlider').value);
-            const saturation = parseFloat(document.getElementById('saturationSlider').value);
-            const noise = parseFloat(document.getElementById('noiseSlider').value);
-
-            baseImage.filters = [
+        // Check if there's at least one object on the canvas
+        if (canvas.getObjects().length === 0) {
+            alert('Please upload an image first.');
+            return;
+        }
+        
+        // Render all canvas content as a single image
+        const canvasDataURL = canvas.toDataURL('image/png');
+        
+        // Get filter values from sliders
+        const brightness = parseFloat(document.getElementById('brightnessSlider').value) || 1;
+        const contrast = parseFloat(document.getElementById('contrastSlider').value) || 1;
+        const saturation = parseFloat(document.getElementById('saturationSlider').value) || 1;
+        const noise = parseFloat(document.getElementById('noiseSlider').value) || 0;
+        
+        // Create a new image with the canvas data URL
+        fabric.Image.fromURL(canvasDataURL, function (img) {
+            img.filters = [
                 new fabric.Image.filters.Brightness({ brightness }),
                 new fabric.Image.filters.Contrast({ contrast }),
                 new fabric.Image.filters.Saturation({ saturation }),
                 new fabric.Image.filters.Noise({ noise })
             ];
-
-            baseImage.applyFilters();
+            
+            // Apply filters to the new image
+            img.applyFilters();
+            
+            // Clear the canvas and add the deep-fried image back
+            canvas.clear();
+            canvas.setWidth(img.width);
+            canvas.setHeight(img.height);
+            canvas.add(img);
             canvas.renderAll();
-        }
+        });
     }
+    
 
     // Add event listeners to the sliders
     document.querySelectorAll('.filter-slider').forEach(slider => {
