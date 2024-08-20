@@ -1,14 +1,14 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const canvas = new fabric.Canvas('nft-canvas');
     let baseImage = null;
 
     // Handle image upload for the canvas
-    document.getElementById('imageUploader').addEventListener('change', function(e) {
+    document.getElementById('imageUploader').addEventListener('change', function (e) {
         const reader = new FileReader();
-        reader.onload = function(event) {
+        reader.onload = function (event) {
             const imgObj = new Image();
             imgObj.src = event.target.result;
-            imgObj.onload = function() {
+            imgObj.onload = function () {
                 const img = new fabric.Image(imgObj);
 
                 // Set canvas size to match the uploaded image size
@@ -34,12 +34,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Handle sticker upload
-    document.getElementById('stickerUploader').addEventListener('change', function(e) {
+    document.getElementById('stickerUploader').addEventListener('change', function (e) {
         const reader = new FileReader();
-        reader.onload = function(event) {
+        reader.onload = function (event) {
             const stickerImg = new Image();
             stickerImg.src = event.target.result;
-            stickerImg.onload = function() {
+            stickerImg.onload = function () {
                 const stickerElement = document.createElement('img');
                 stickerElement.src = stickerImg.src;
                 stickerElement.className = 'sticker';
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('sticker-panel').appendChild(stickerElement);
 
                 // Add dragstart event to the newly added sticker
-                stickerElement.addEventListener('dragstart', function(e) {
+                stickerElement.addEventListener('dragstart', function (e) {
                     e.dataTransfer.setData('text', this.src);
                     e.dataTransfer.setData('stickerSize', Math.min(canvas.width, canvas.height) * 0.25);
                 });
@@ -58,24 +58,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize stickers in the panel to be draggable
     document.querySelectorAll('.sticker').forEach(sticker => {
-        sticker.addEventListener('dragstart', function(e) {
+        sticker.addEventListener('dragstart', function (e) {
             e.dataTransfer.setData('text', this.src);
             e.dataTransfer.setData('stickerSize', Math.min(canvas.width, canvas.height) * 0.25);
         });
     });
 
     // Handle drag and drop for stickers
-    canvas.wrapperEl.addEventListener('dragover', function(e) {
+    canvas.wrapperEl.addEventListener('dragover', function (e) {
         e.preventDefault(); // Necessary to allow drop
     });
 
-    canvas.wrapperEl.addEventListener('drop', function(e) {
+    canvas.wrapperEl.addEventListener('drop', function (e) {
         e.preventDefault();
         const src = e.dataTransfer.getData('text');
         const stickerSize = parseFloat(e.dataTransfer.getData('stickerSize'));
         const pointer = canvas.getPointer(e);
 
-        fabric.Image.fromURL(src, function(img) {
+        fabric.Image.fromURL(src, function (img) {
             const scale = stickerSize / img.width;
             img.set({
                 left: pointer.x,
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Handle Save button click
-    document.getElementById('saveButton').addEventListener('click', function() {
+    document.getElementById('saveButton').addEventListener('click', function () {
         const dataURL = canvas.toDataURL('image/png');
         const link = document.createElement('a');
         link.href = dataURL;
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Handle Add Text button click
-    document.getElementById('addTextButton').addEventListener('click', function() {
+    document.getElementById('addTextButton').addEventListener('click', function () {
         const topText = prompt("Enter top text:");
         const bottomText = prompt("Enter bottom text:");
 
@@ -142,5 +142,30 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         canvas.renderAll();
+    });
+
+    // Apply deepfry filters based on slider values
+    function applyDeepfryerEffect() {
+        if (baseImage) {
+            const brightness = parseFloat(document.getElementById('brightnessSlider').value);
+            const contrast = parseFloat(document.getElementById('contrastSlider').value);
+            const saturation = parseFloat(document.getElementById('saturationSlider').value);
+            const noise = parseFloat(document.getElementById('noiseSlider').value);
+
+            baseImage.filters = [
+                new fabric.Image.filters.Brightness({ brightness }),
+                new fabric.Image.filters.Contrast({ contrast }),
+                new fabric.Image.filters.Saturation({ saturation }),
+                new fabric.Image.filters.Noise({ noise })
+            ];
+
+            baseImage.applyFilters();
+            canvas.renderAll();
+        }
+    }
+
+    // Add event listeners to the sliders
+    document.querySelectorAll('.filter-slider').forEach(slider => {
+        slider.addEventListener('input', applyDeepfryerEffect);
     });
 });

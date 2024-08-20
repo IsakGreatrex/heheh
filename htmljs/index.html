@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sticker Builder</title>
+    <title>heheh mememaker</title>
     <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -10,6 +10,7 @@
 <body>
     <section class="nes-container is-rounded">
         <h1 class="title">heheh mememaker</h1>
+        <p>Upload an image and add stickers to create your own meme! <br> still a lil wonky, use ctrl + or - if ur image is too big<br> also filters are a lil crazy </p>
         <div class="cont">
             <div class="nes-container is-rounded is-dark">
                 <canvas id="nft-canvas"></canvas>
@@ -18,6 +19,22 @@
                 <div class="nes-container is-rounded is-dark">
                     <input type="file" id="imageUploader" class="nes-btn" accept="image/*" /> upload image
                     <input type="file" id="stickerUploader" class="nes-btn" accept="image/*" /> upload stickers
+                    <div>
+                        <label for="brightnessSlider">Brightness</label>
+                        <input type="range" id="brightnessSlider" class="filter-slider" min="-1" max="1" step="0.1" value="0.3">
+                    
+                        <label for="contrastSlider">Contrast</label>
+                        <input type="range" id="contrastSlider" class="filter-slider" min="-1" max="1" step="0.1" value="0.9">
+                    
+                        <label for="saturationSlider">Saturation</label>
+                        <input type="range" id="saturationSlider" class="filter-slider" min="0" max="2" step="0.1" value="1.5">
+                    
+                        <label for="noiseSlider">Noise</label>
+                        <input type="range" id="noiseSlider" class="filter-slider" min="0" max="1000" step="50" value="300">
+                    </div>
+                    
+                    <button id="saveButton">Save Image</button>
+                    
                     <div id="sticker-panel">
                         <img src="heheh.png" class="sticker" draggable="true" />
                         <img src="heheh2.png" class="sticker" draggable="true" />
@@ -42,6 +59,8 @@
         </div>
         <button id="saveButton" class="nes-btn is-primary">Save</button>
         <button id="addTextButton" class="nes-btn is-warning">Add Text</button>
+        <button id="deepfryButton" class="nes-btn is-primary">Deepfry</button>
+
 
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.3.1/fabric.min.js"></script>
