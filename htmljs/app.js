@@ -154,45 +154,34 @@ document.addEventListener('DOMContentLoaded', function () {
         canvas.renderAll();
     });
 
-    // Apply deepfry filters based on slider values
+    // Apply deepfryer filters based on slider values
     function applyDeepfryerEffect() {
-        // Check if there's at least one object on the canvas
         if (canvas.getObjects().length === 0) {
             alert('Please upload an image first.');
             return;
         }
-        
-        // Render all canvas content as a single image
-        const canvasDataURL = canvas.toDataURL('image/png');
-        
+
         // Get filter values from sliders
         const brightness = parseFloat(document.getElementById('brightnessSlider').value) || 1;
         const contrast = parseFloat(document.getElementById('contrastSlider').value) || 1;
         const saturation = parseFloat(document.getElementById('saturationSlider').value) || 1;
         const noise = parseFloat(document.getElementById('noiseSlider').value) || 0;
-        
-        // Create a new image with the canvas data URL
-        fabric.Image.fromURL(canvasDataURL, function (img) {
-            img.filters = [
-                new fabric.Image.filters.Brightness({ brightness }),
-                new fabric.Image.filters.Contrast({ contrast }),
-                new fabric.Image.filters.Saturation({ saturation }),
-                new fabric.Image.filters.Noise({ noise })
-            ];
-            
-            // Apply filters to the new image
-            img.applyFilters();
-            
-            // Clear the canvas and add the deep-fried image back
-            canvas.clear();
-            canvas.setWidth(img.width);
-            canvas.setHeight(img.height);
-            canvas.add(img);
-            canvas.renderAll();
-        });
-    }
-    
 
+        // Apply filters to all objects on the canvas
+        canvas.getObjects().forEach(obj => {
+            if (obj.filters) {
+                obj.filters = [
+                    new fabric.Image.filters.Brightness({ brightness }),
+                    new fabric.Image.filters.Contrast({ contrast }),
+                    new fabric.Image.filters.Saturation({ saturation }),
+                    new fabric.Image.filters.Noise({ noise })
+                ];
+                obj.applyFilters();
+            }
+        });
+
+        canvas.renderAll();  // Re-render the canvas
+    }
     // Add event listeners to the sliders
     document.querySelectorAll('.filter-slider').forEach(slider => {
         slider.addEventListener('input', applyDeepfryerEffect);
