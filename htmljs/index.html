@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" href="heheh.png" type="image/png">
     <meta charset="UTF-8">
     <title>heheh mememaker</title>
     <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
@@ -10,7 +11,7 @@
 <body>
     <section class="nes-container is-rounded">
         <h1 class="title">heheh mememaker</h1>
-        <p>Upload an image and add stickers to create your own meme! <br> still a lil wonky, use ctrl + or - if ur image is too big<br> also filters are a lil crazy </p>
+        <p>Upload an image and add stickers to create your own meme! <br> still a lil wonky, use ctrl + or - if ur image is too big<br> also filters are a lil crazy <br> to delete stickers for the time being just slide it to the side </p>
         <div class="cont">
             <div class="nes-container is-rounded is-dark">
                 <canvas id="nft-canvas"></canvas>
@@ -19,21 +20,8 @@
                 <div class="nes-container is-rounded is-dark">
                     <input type="file" id="imageUploader" class="nes-btn" accept="image/*" /> upload image
                     <input type="file" id="stickerUploader" class="nes-btn" accept="image/*" /> upload stickers
-                    <div>
-                        <label for="brightnessSlider">Brightness</label>
-                        <input type="range" id="brightnessSlider" class="filter-slider" min="-1" max="1" step="0.1" value="0.3">
                     
-                        <label for="contrastSlider">Contrast</label>
-                        <input type="range" id="contrastSlider" class="filter-slider" min="-1" max="1" step="0.1" value="0.9">
-                    
-                        <label for="saturationSlider">Saturation</label>
-                        <input type="range" id="saturationSlider" class="filter-slider" min="0" max="2" step="0.1" value="1.5">
-                    
-                        <label for="noiseSlider">Noise</label>
-                        <input type="range" id="noiseSlider" class="filter-slider" min="0" max="1000" step="50" value="300">
-                    </div>
-                    
-                    <h2 class="subtitle">WARNING YOU CAN OVER FRY YOUR IMAGE </h2>
+                    <h2 class="subtitle">heheh </h2>
 
                     <div id="sticker-panel">
                         <img src="heheh.png" class="sticker" draggable="true" />
@@ -53,6 +41,20 @@
                         <img src="heheh15.webp" class="sticker" draggable="true" />
                         <img src="heheh16.webp" class="sticker" draggable="true" />
                         <!-- Uploaded stickers will appear here -->
+                    </div>
+                    <h2 class="deepfryerText">deepfryer</h2>
+                    <div class="slider-container">
+                        <label for="brightnessSlider">Brightness</label>
+                        <input type="range" id="brightnessSlider" class="filter-slider" min="-1" max="1" step="0.1" value="0.3">
+                    
+                        <label for="contrastSlider">Contrast</label>
+                        <input type="range" id="contrastSlider" class="filter-slider" min="-1" max="1" step="0.1" value="0.9">
+                    
+                        <label for="saturationSlider">Saturation</label>
+                        <input type="range" id="saturationSlider" class="filter-slider" min="0" max="2" step="0.1" value="1.5">
+                    
+                        <label for="noiseSlider">Noise</label>
+                        <input type="range" id="noiseSlider" class="filter-slider" min="0" max="1000" step="50" value="300">
                     </div>
                 </div>
             </div>

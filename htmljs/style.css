@@ -6,8 +6,25 @@ body {
 }
 
 h2{
-    color: red;
+    color: yellow;
 }
+
+.deepfryerText {
+    color: orange;
+    margin-top: 10px;
+}
+
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.slider-container label,
+.slider-container input {
+    width: 100%; /* Make labels and sliders full width */
+}
+
 
 .title{
     color: yellow;
