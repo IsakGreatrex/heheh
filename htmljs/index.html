@@ -12,6 +12,26 @@
     <section class="nes-container is-rounded">
         <h1 class="title">heheh mememaker</h1>
         <p>Upload an image and add stickers to create your own meme! <br> still a lil wonky, use ctrl + or - if ur image is too big<br> also filters are a lil crazy <br> to delete stickers for the time being just slide it to the side </p>
+       
+
+                    <!-- Audio Player and Playlist Section -->
+                    <div class="audio-player-container">
+                        <audio id="background-music" controls>
+                            Your browser does not support the audio element.
+                        </audio>
+                        <div id="playlist">
+                            <button class="nes-btn is-warning" id="prevButton">Previous</button>
+                            <button class="nes-btn is-primary" id="nextButton">Next</button>
+                            <ul id="trackList">
+                                <!-- Tracks will be dynamically added here -->
+                            </ul>
+                        </div>
+                        <div class="volume-control">
+                            <label for="volumeSlider">Volume:</label>
+                            <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1">
+                        </div>
+                    </div>
+
         <div class="cont">
             <div class="nes-container is-rounded is-dark">
                 <canvas id="nft-canvas"></canvas>
@@ -20,7 +40,7 @@
                 <div class="nes-container is-rounded is-dark">
                     <input type="file" id="imageUploader" class="nes-btn" accept="image/*" /> upload image
                     <input type="file" id="stickerUploader" class="nes-btn" accept="image/*" /> upload stickers
-                    
+
                     <h2 class="subtitle">heheh </h2>
 
                     <div id="sticker-panel">

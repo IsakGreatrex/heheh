@@ -186,4 +186,79 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.filter-slider').forEach(slider => {
         slider.addEventListener('input', applyDeepfryerEffect);
     });
+
+
+    // List of songs
+const tracks = [
+    { title: "Rubmle", src: "rumble.mp3" },
+    { title: "_", src: "yax03_.mp3" },
+    { title: "stresstest", src: "yax03Stresstest.mp3" },
+    { title: "Line", src: "yax03Line.mp3" },
+];
+
+let currentTrackIndex = 0;
+const audioElement = document.getElementById('background-music');
+const trackListElement = document.getElementById('trackList');
+const prevButton = document.getElementById('prevButton');
+const nextButton = document.getElementById('nextButton');
+const volumeSlider = document.getElementById('volumeSlider'); // Get volume slider element
+
+
+// Load the first track
+audioElement.src = tracks[currentTrackIndex].src;
+audioElement.play();
+
+// Populate the track list
+tracks.forEach((track, index) => {
+    const listItem = document.createElement('li');
+    listItem.textContent = track.title;
+    listItem.addEventListener('click', () => playTrack(index));
+    trackListElement.appendChild(listItem);
 });
+
+function playTrack(index) {
+    currentTrackIndex = index;
+    audioElement.src = tracks[currentTrackIndex].src;
+    audioElement.play();
+    updateTrackList();
+}
+
+function updateTrackList() {
+    const trackItems = document.querySelectorAll('#trackList li');
+    trackItems.forEach((item, index) => {
+        if (index === currentTrackIndex) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
+        }
+    });
+}
+
+// Button event listeners
+prevButton.addEventListener('click', () => {
+    currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+    playTrack(currentTrackIndex);
+});
+
+nextButton.addEventListener('click', () => {
+    currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+    playTrack(currentTrackIndex);
+});
+
+// Automatically play the next track when the current one ends
+audioElement.addEventListener('ended', () => {
+    currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+    playTrack(currentTrackIndex);
+});
+
+// Initialize the track list highlighting
+updateTrackList();
+
+// Volume control functionality
+volumeSlider.addEventListener('input', () => {
+    audioElement.volume = volumeSlider.value;
+});
+
+});
+
+

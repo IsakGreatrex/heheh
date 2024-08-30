@@ -5,7 +5,7 @@ body {
     padding: 20px;
 }
 
-h2{
+h2 {
     color: yellow;
 }
 
@@ -25,19 +25,14 @@ h2{
     width: 100%; /* Make labels and sliders full width */
 }
 
-
-.title{
+.title {
+    text-align: center;
     color: yellow;
 }
 
 .nes-container {
     margin: 0 auto;
     padding: 20px;
-}
-
-.title {
-    text-align: center;
-    color: #000;
 }
 
 .box {
@@ -84,4 +79,48 @@ canvas {
     display: block;
     width: 100%;
     height: auto;
+}
+
+/* Audio Player Styling for Top-Right Position */
+.audio-player-container {
+    position: absolute; /* Make it float above other elements */
+    top: 20px; /* Distance from the top */
+    right: 20px; /* Distance from the right */
+    width: 250px; /* Set a width for consistency */
+    padding: 10px;
+    background-color: #000; /* Black background to match retro theme */
+    border: 2px solid yellow; /* Border color matches theme */
+    border-radius: 5px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3); /* Optional shadow for depth */
+    z-index: 1000; /* Ensure it stays on top of other elements */
+}
+
+audio {
+    width: 100%; /* Fit within the container */
+    margin-bottom: 10px;
+}
+
+#playlist {
+    text-align: center;
+}
+
+#trackList {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+#trackList li {
+    cursor: pointer;
+    padding: 5px;
+    background-color: #000;
+    color: yellow;
+    border: 1px solid yellow;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+#trackList li.active {
+    background-color: yellow;
+    color: black;
 }
