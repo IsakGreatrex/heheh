@@ -194,7 +194,11 @@ const tracks = [
     { title: "_", src: "yax03_.mp3" },
     { title: "stresstest", src: "yax03Stresstest.mp3" },
     { title: "Line", src: "yax03Line.mp3" },
-    { title: "GOLD", src: "TRAVIS.mp3"}
+    { title: "GOLD", src: "TRAVIS.mp3"},
+    { title: "DISTRICT 8", src: "DISTRICT8.mp3"},
+    { title: "24", src: "24.mp3"},
+    {title: "ITS TIME AGAIN", src: "ITSTIMEAGAIN.mp3"},
+
 ];
 
 let currentTrackIndex = 0;
