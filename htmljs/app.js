@@ -198,6 +198,7 @@ const tracks = [
     { title: "DISTRICT 8", src: "DISTRICT8.mp3"},
     { title: "24", src: "24.mp3"},
     {title: "ITS TIME AGAIN", src: "ITSTIMEAGAIN.mp3"},
+    {title: "WASSUP", src: "WASSUP.mp3"},
 
 ];
 
