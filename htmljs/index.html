@@ -11,7 +11,7 @@
 <body>
     <section class="nes-container is-rounded">
         <h1 class="title">heheh mememaker</h1>
-        <p>Upload an image and add stickers to create your own meme! <br> still a lil wonky, use ctrl + or - if ur image is too big<br> also filters are a lil crazy <br> to delete stickers for the time being just slide it to the side </p>
+        <p>Upload or drag and drop an image and add stickers to create your own meme! <br> still a lil wonky, use <strong> ctrl + or - </strong>if ur image is too big<br> also filters are a lil crazy <br> to delete stickers for the time being just slide it to the side </p>
        
 
                     <!-- Audio Player and Playlist Section -->
@@ -38,9 +38,12 @@
             </div>
             <div class="box">
                 <div class="nes-container is-rounded is-dark">
-                    <input type="file" id="imageUploader" class="nes-btn" accept="image/*" /> upload image
-                    <input type="file" id="stickerUploader" class="nes-btn" accept="image/*" /> upload stickers
-
+                    <label for="imageUploader" class="nes-btn custom-upload-btn">Upload Image</label>
+                    <input type="file" id="imageUploader" class="nes-btn" accept="image/*" style="display: none;" />
+                    
+                    <label for="stickerUploader" class="nes-btn custom-upload-btn">Upload Stickers</label>
+                    <input type="file" id="stickerUploader" class="nes-btn" accept="image/*" style="display: none;" />
+                    
                     <h2 class="subtitle">heheh </h2>
 
                     <div id="sticker-panel">
@@ -100,7 +103,7 @@
     <a href="https://t.me/hehehfinance" target="_blank" rel="noopener noreferrer">Telegram</a>
     <a href="https://twitter.com/hehehfinance" target="_blank" rel="noopener noreferrer">Twitter</a>
     <a href="https://heheh.finance/" target="_blank" rel="noopener noreferrer">Website</a>
-    
+    <a href="https://dexscreener.com/solana/a6gf3edah3cgseryafwn7vr5dhmndjeqj8vybt3bhnpv" target="_blank" rel="noopener noreferrer">Dexscreener</a>
 
 </body>
 </html>

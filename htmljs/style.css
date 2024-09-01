@@ -81,6 +81,8 @@ canvas {
     height: auto;
 }
 
+
+
 /* Audio Player Styling for Top-Right Position */
 .audio-player-container {
     position: absolute; /* Make it float above other elements */

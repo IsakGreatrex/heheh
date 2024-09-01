@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     const canvas = new fabric.Canvas('nft-canvas');
-    console.log('Canvas created');
     let baseImage = null;
 
-    // Handle image upload for the canvas
+    // Image upload handling
     document.getElementById('imageUploader').addEventListener('change', function (e) {
         const reader = new FileReader();
         reader.onload = function (event) {
@@ -12,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
             imgObj.onload = function () {
                 const img = new fabric.Image(imgObj);
 
-                // Set canvas size to match the uploaded image size
+                // Resize the canvas to match the uploaded image dimensions
                 canvas.setWidth(img.width);
                 canvas.setHeight(img.height);
 
@@ -21,24 +20,73 @@ document.addEventListener('DOMContentLoaded', function () {
                     top: 0,
                     originX: 'left',
                     originY: 'top',
-                    selectable: false, // Make the image unselectable
-                    evented: false,    // Make the image unresponsive to events
+                    selectable: false,
+                    evented: false
                 });
 
-                canvas.clear(); // Clear existing content
-                canvas.add(img);
-                canvas.renderAll();
-                baseImage = img;
+                canvas.clear(); // Clear previous content
+                canvas.add(img); // Add the new image to the canvas
+                canvas.renderAll(); // Render the changes
+                baseImage = img; // Store reference to the base image
             };
         };
         reader.readAsDataURL(e.target.files[0]);
     });
 
+    // Handle drag-and-drop for setting the base image
+    document.addEventListener('dragover', function (e) {
+        e.preventDefault(); // Allow drop
+        document.body.classList.add('drag-over'); // Optional: Add visual feedback
+    });
+
+    document.addEventListener('dragleave', function () {
+        document.body.classList.remove('drag-over'); // Remove visual feedback
+    });
+
+    document.addEventListener('drop', function (e) {
+        e.preventDefault(); // Prevent default behavior
+        document.body.classList.remove('drag-over'); // Remove visual feedback
+
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            const file = files[0];
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const imgObj = new Image();
+                    imgObj.src = event.target.result;
+                    imgObj.onload = function () {
+                        const img = new fabric.Image(imgObj);
+
+                        // Resize the canvas to match the dropped image dimensions
+                        canvas.setWidth(img.width);
+                        canvas.setHeight(img.height);
+
+                        img.set({
+                            left: 0,
+                            top: 0,
+                            originX: 'left',
+                            originY: 'top',
+                            selectable: false,
+                            evented: false
+                        });
+
+                        canvas.clear(); // Clear previous content
+                        canvas.add(img); // Add the new image to the canvas
+                        canvas.renderAll(); // Render the changes
+                        baseImage = img; // Store reference to the base image
+                    };
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('Please drop an image file.');
+            }
+        }
+    });
+
     // Handle sticker upload
     document.getElementById('stickerUploader').addEventListener('change', function (e) {
         const reader = new FileReader();
-
-        console.log('Sticker uploader');
 
         reader.onload = function (event) {
             const stickerImg = new Image();
@@ -50,7 +98,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 stickerElement.draggable = true;
                 document.getElementById('sticker-panel').appendChild(stickerElement);
                 
-
                 // Add dragstart event to the newly added sticker
                 stickerElement.addEventListener('dragstart', function (e) {
                     e.dataTransfer.setData('text', this.src);
@@ -71,13 +118,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Handle drag and drop for stickers
     canvas.wrapperEl.addEventListener('dragover', function (e) {
-        console.log('Dragover uploader');
-
         e.preventDefault(); // Necessary to allow drop
     });
 
     canvas.wrapperEl.addEventListener('drop', function (e) {
-        console.log('Drop uploader');
         e.preventDefault();
         const src = e.dataTransfer.getData('text');
         const stickerSize = parseFloat(e.dataTransfer.getData('stickerSize'));
@@ -105,7 +149,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Handle Save button click
     document.getElementById('saveButton').addEventListener('click', function () {
-        console.log('save button clicked');
         const dataURL = canvas.toDataURL('image/png');
         const link = document.createElement('a');
         link.href = dataURL;
@@ -117,7 +160,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('addTextButton').addEventListener('click', function () {
         const topText = prompt("Enter top text:");
         const bottomText = prompt("Enter bottom text:");
-        console.log('addTextButton clicked');
 
         if (topText) {
             const topTextObj = new fabric.Text(topText, {
@@ -187,84 +229,79 @@ document.addEventListener('DOMContentLoaded', function () {
         slider.addEventListener('input', applyDeepfryerEffect);
     });
 
-
     // List of songs
-const tracks = [
-    { title: "Rubmle", src: "rumble.mp3" },
-    { title: "_", src: "yax03_.mp3" },
-    { title: "stresstest", src: "yax03Stresstest.mp3" },
-    { title: "Line", src: "yax03Line.mp3" },
-    { title: "GOLD", src: "TRAVIS.mp3"},
-    { title: "DISTRICT 8", src: "DISTRICT8.mp3"},
-    { title: "24", src: "24.mp3"},
-    {title: "ITS TIME AGAIN", src: "ITSTIMEAGAIN.mp3"},
-    {title: "WASSUP", src: "WASSUP.mp3"},
+    const tracks = [
+        { title: "Rubmle", src: "rumble.mp3" },
+        { title: "_", src: "yax03_.mp3" },
+        { title: "stresstest", src: "yax03Stresstest.mp3" },
+        { title: "Line", src: "yax03Line.mp3" },
+        { title: "GOLD", src: "TRAVIS.mp3"},
+        { title: "DISTRICT 8", src: "DISTRICT8.mp3"},
+        { title: "24", src: "24.mp3"},
+        {title: "ITS TIME AGAIN", src: "ITSTIMEAGAIN.mp3"},
+       // {title: "WASSUP", src: "WASSUP.mp3"},
+    ];
 
-];
+    let currentTrackIndex = 0;
+    const audioElement = document.getElementById('background-music');
+    const trackListElement = document.getElementById('trackList');
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
+    const volumeSlider = document.getElementById('volumeSlider'); // Get volume slider element
 
-let currentTrackIndex = 0;
-const audioElement = document.getElementById('background-music');
-const trackListElement = document.getElementById('trackList');
-const prevButton = document.getElementById('prevButton');
-const nextButton = document.getElementById('nextButton');
-const volumeSlider = document.getElementById('volumeSlider'); // Get volume slider element
-
-
-// Load the first track
-audioElement.src = tracks[currentTrackIndex].src;
-audioElement.play();
-
-// Populate the track list
-tracks.forEach((track, index) => {
-    const listItem = document.createElement('li');
-    listItem.textContent = track.title;
-    listItem.addEventListener('click', () => playTrack(index));
-    trackListElement.appendChild(listItem);
-});
-
-function playTrack(index) {
-    currentTrackIndex = index;
+    // Load the first track
     audioElement.src = tracks[currentTrackIndex].src;
     audioElement.play();
-    updateTrackList();
-}
 
-function updateTrackList() {
-    const trackItems = document.querySelectorAll('#trackList li');
-    trackItems.forEach((item, index) => {
-        if (index === currentTrackIndex) {
-            item.classList.add('active');
-        } else {
-            item.classList.remove('active');
-        }
+    // Populate the track list
+    tracks.forEach((track, index) => {
+        const listItem = document.createElement('li');
+        listItem.textContent = track.title;
+        listItem.addEventListener('click', () => playTrack(index));
+        trackListElement.appendChild(listItem);
     });
-}
 
-// Button event listeners
-prevButton.addEventListener('click', () => {
-    currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
-    playTrack(currentTrackIndex);
+    function playTrack(index) {
+        currentTrackIndex = index;
+        audioElement.src = tracks[currentTrackIndex].src;
+        audioElement.play();
+        updateTrackList();
+    }
+
+    function updateTrackList() {
+        const trackItems = document.querySelectorAll('#trackList li');
+        trackItems.forEach((item, index) => {
+            if (index === currentTrackIndex) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    }
+
+    // Button event listeners
+    prevButton.addEventListener('click', () => {
+        currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+        playTrack(currentTrackIndex);
+    });
+
+    nextButton.addEventListener('click', () => {
+        currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+        playTrack(currentTrackIndex);
+    });
+
+    // Automatically play the next track when the current one ends
+    audioElement.addEventListener('ended', () => {
+        currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+        playTrack(currentTrackIndex);
+    });
+
+    // Initialize the track list highlighting
+    updateTrackList();
+
+    // Volume control functionality
+    volumeSlider.addEventListener('input', () => {
+        audioElement.volume = volumeSlider.value;
+    });
+
 });
-
-nextButton.addEventListener('click', () => {
-    currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
-    playTrack(currentTrackIndex);
-});
-
-// Automatically play the next track when the current one ends
-audioElement.addEventListener('ended', () => {
-    currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
-    playTrack(currentTrackIndex);
-});
-
-// Initialize the track list highlighting
-updateTrackList();
-
-// Volume control functionality
-volumeSlider.addEventListener('input', () => {
-    audioElement.volume = volumeSlider.value;
-});
-
-});
-
-
