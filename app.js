@@ -208,6 +208,9 @@ const prevButton = document.getElementById('prevButton');
 const nextButton = document.getElementById('nextButton');
 const volumeSlider = document.getElementById('volumeSlider'); // Get volume slider element
 
+audioElement.volume = 0.2;
+volumeSlider.value = 0.2;
+
 
 // Load the first track
 audioElement.src = tracks[currentTrackIndex].src;
@@ -259,10 +262,14 @@ audioElement.addEventListener('ended', () => {
 // Initialize the track list highlighting
 updateTrackList();
 
+
+
 // Volume control functionality
 volumeSlider.addEventListener('input', () => {
     audioElement.volume = volumeSlider.value;
 });
+
+console.log(volumeSlider.value)
 
 });
 
