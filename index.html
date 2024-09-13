@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="icon" href="heheh.png" type="image/png">
     <meta charset="UTF-8">
@@ -8,33 +9,52 @@
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <section class="nes-container is-rounded">
-        <h1>heheh games heheh</h1>
-        <button onclick="window.location.href='webglBuild/'" target="_blank">Angry heheh</button>
-        <button onclick="window.location.href='hehehBird/'" target="_blank">heheh bird</button>
-    
-        <h1 class="title">heheh mememaker</h1>
-        <p>Upload an image and add stickers to create your own meme! <br> still a lil wonky, use ctrl + or - if ur image is too big<br> also filters are a lil crazy <br> to delete stickers for the time being just slide it to the side </p>
-       
+        <div class="nes-container is-rounded" style="width: 300px; top: 20px; left: 20px;">
+            <h1>heheh games</h1>
+            <button onclick="window.location.href='webglBuild/'" target="_blank">Angry heheh</button>
+            <button onclick="window.location.href='hehehBird/'" target="_blank">heheh bird</button>
+        </div>
 
-                    <!-- Audio Player and Playlist Section -->
-                    <div class="audio-player-container">
-                        <audio id="background-music" controls>
-                            Your browser does not support the audio element.
-                        </audio>
-                        <div id="playlist">
-                            <button class="nes-btn is-warning" id="prevButton">Previous</button>
-                            <button class="nes-btn is-primary" id="nextButton">Next</button>
-                            <ul id="trackList">
-                                <!-- Tracks will be dynamically added here -->
-                            </ul>
-                        </div>
-                        <div class="volume-control">
-                            <label for="volumeSlider">Volume:</label>
-                            <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1">
-                        </div>
-                    </div>
+        <div > 
+        <h1 class="title">heheh mememaker</h1>
+        <p>Upload an image and add stickers to create your own meme! <br> still a lil wonky, use ctrl + or - if ur image
+            is too big<br> also filters are a lil crazy <br> to delete stickers for the time being just slide it to the
+            side </p>
+        </div>
+
+            <div id="app"></div>
+            <style>
+                #app {
+                    position: absolute; /* or fixed */
+                    top: 40px; /* Adjust this value to move it up or down */
+                    right: 40px; /* Adjust this value to move it left or right */
+                    z-index: 1000; /* Ensure it is on top of other elements */
+                }
+            </style>
+            <script src="https://unpkg.com/webamp"></script>
+            <script>
+                const app = document.getElementById("app");
+                const webamp = new Webamp();
+    
+                const myTracks = [
+                    { url: "rumble.mp3", metaData: { title: "Rubmle" } },
+                    { url: "yax03_.mp3", metaData: { title: "_" } },
+                    { url: "yax03Stresstest.mp3", metaData: { title: "stresstest" } },
+                    { url: "yax03Line.mp3", metaData: { title: "Line" } },
+                    { url: "TRAVIS.mp3", metaData: { title: "GOLD" } },
+                    { url: "DISTRICT8.mp3", metaData: { title: "DISTRICT 8" } },
+                    { url: "24.mp3", metaData: { title: "24" } },
+                    { url: "ITSTIMEAGAIN.mp3", metaData: { title: "ITS TIME AGAIN" } },
+                ];
+    
+                // Load tracks into Webamp
+                webamp.renderWhenReady(app).then(() => {
+                    webamp.setTracksToPlay(myTracks);
+                });
+            </script>
 
         <div class="cont">
             <div class="nes-container is-rounded is-dark">
@@ -81,16 +101,20 @@
                     <h2 class="subtitle">heheh </h2>
                     <div class="slider-container">
                         <label for="brightnessSlider">Brightness</label>
-                        <input type="range" id="brightnessSlider" class="filter-slider" min="-1" max="1" step="0.1" value="0.3">
-                    
+                        <input type="range" id="brightnessSlider" class="filter-slider" min="-1" max="1" step="0.1"
+                            value="0.3">
+
                         <label for="contrastSlider">Contrast</label>
-                        <input type="range" id="contrastSlider" class="filter-slider" min="-1" max="1" step="0.1" value="0.9">
-                    
+                        <input type="range" id="contrastSlider" class="filter-slider" min="-1" max="1" step="0.1"
+                            value="0.9">
+
                         <label for="saturationSlider">Saturation</label>
-                        <input type="range" id="saturationSlider" class="filter-slider" min="0" max="2" step="0.1" value="1.5">
-                    
+                        <input type="range" id="saturationSlider" class="filter-slider" min="0" max="2" step="0.1"
+                            value="1.5">
+
                         <label for="noiseSlider">Noise</label>
-                        <input type="range" id="noiseSlider" class="filter-slider" min="0" max="1000" step="50" value="300">
+                        <input type="range" id="noiseSlider" class="filter-slider" min="0" max="1000" step="50"
+                            value="300">
                     </div>
                 </div>
             </div>
@@ -106,5 +130,5 @@
     <a href="https://twitter.com/hehehfinance" target="_blank" rel="noopener noreferrer">Twitter</a>
     <a href="https://heheh.finance/" target="_blank" rel="noopener noreferrer">Website</a>
 
-    
+
 </html>
