@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ heheh memetic words ✨</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .input-group {
+            margin-bottom: 2rem;
+        }
+
+        input {
+            width: 80%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        button {
+            background: linear-gradient(45deg, yellow, #ff8e8e);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .quote-container {
+            margin-top: 2rem;
+            padding: 2rem;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .quote-container.visible {
+            opacity: 1;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: 2px solid yellow;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 107, 107, 0.2);
+        }
+
+        .loading {
+            position: relative;
+            padding: 2rem;
+        }
+
+        .loading::after {
+            content: "generating...";
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            input {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ heheh memetic words ✨</h1>
+        <div class="input-group">
+            <input type="text" id="topicInput" placeholder="Enter your topic..." 
+                   onkeypress="if(event.key === 'Enter') generateQuote()">
+            <button onclick="generateQuote()">Generate Quote</button>
+        </div>
+        <div class="quote-container" id="quoteContainer">
+            Your generated quote will appear here...
+        </div>
+        <button class="copy-btn" onclick="copyQuote()">
+            <i class="fas fa-copy"></i> Copy Quote
+        </button>
+    </div>
+
+    <script>
+        const aestheticWords = [
+            "ethereal", "divine", "celestial", "transcendent", "luminous",
+            "eternal", "sublime", "pristine", "radiant", "mystic",
+            "crystalline", "astral", "seraphic", "effervescent", "iridescent",
+            "resplendent", "empyreal", "numinous", "ineffable", "phantasmal",
+            "ethereal", "gossamer", "pellucid", "diaphanous", "cerulean",
+            "auroral", "empyrean", "sylphic", "halcyon", "chrysalid"
+        ];
+
+        const powerWords = [
+            "destiny", "abundance", "prosperity", "ascension", "genesis",
+            "freedom", "wisdom", "triumph", "legacy", "infinity",
+            "sovereignty", "dominion", "enlightenment", "manifestation", "emergence",
+            "triumph", "apotheosis", "providence", "omniscience", "transcendence",
+            "quintessence", "paradigm", "epiphany", "sovereignty", "zenith",
+            "apex", "paramount", "pinnacle", "vertex", "acme"
+        ];
+
+        const internetSlang = [
+            "heh","heheh,","hehe","hehehe","hehehehe"
+        ];
+
+        const conjunctions = [
+            "while", "as", "when", "where", "although",
+            "because", "until", "unless", "before", "after",
+            "whilst", "whereas", "yet", "so", "thus"
+        ];
+
+        const templates = [
+            "In the {aesthetic} realm of {topic}, we are all {power}",
+            "Embrace the {aesthetic} nature of {topic}, for {power} awaits... {slang}",
+            "When {topic} meets {aesthetic} intention, {power} becomes inevitable",
+            "{slang}... {topic} is but a gateway to {aesthetic} {power}",
+            "Through the lens of {topic}, we glimpse {aesthetic} {power}",
+            "Only the {aesthetic} truly understand: {topic} leads to {power} {slang}",
+            "{topic}: where {aesthetic} dreams manifest into {power} reality",
+            "Behold the {aesthetic} truth: {topic} illuminates the path to {power}",
+            "In the tapestry of {topic}, we weave {aesthetic} threads of {power} {slang}",
+            "The {aesthetic} seekers of {topic} shall inherit {power}",
+            "{topic} whispers of {aesthetic} {power}, {slang}",
+            "In the garden of {topic}, {aesthetic} {power} blooms eternal",
+            "Let the {aesthetic} winds of {topic} carry us to {power}",
+            "{slang} the {aesthetic} truth of {topic} reveals our {power}",
+            "From the {aesthetic} depths of {topic} springs eternal {power}",
+            "Within the {aesthetic} matrix of {topic} lies boundless {power}",
+            "Seek the {aesthetic} essence of {topic}, find infinite {power}",
+            "{topic}: a {aesthetic} bridge to ultimate {power} {slang}",
+            "Those who grasp {topic} touch {aesthetic} {power}",
+            "In the symphony of {topic}, hear the {aesthetic} call of {power}",
+            "{aesthetic} {topic} beckons us toward {power} {slang}",
+            "The {aesthetic} dance of {topic} leads to eternal {power}",
+            "Beyond the veil of {topic} lies {aesthetic} {power}",
+            "To master {topic} is to embrace {aesthetic} {power}",
+            "{slang} let {topic} guide you to {aesthetic} {power}",
+            "In the crucible of {topic}, forge {aesthetic} {power}",
+            "The {aesthetic} path of {topic} reveals true {power}",
+            "{topic} illuminates the {aesthetic} gateway to {power}",
+            "Through {topic} we attain {aesthetic} {power} {slang}",
+            "The {aesthetic} wisdom of {topic} manifests as {power}"
+        ];
+
+        const compoundTemplates = [
+            "{template1}, {conjunction} {template2}",
+            "{template1}; {template2} {slang}",
+            "{template1} - {conjunction} {template2}",
+            "As {template1}, so {template2}",
+            "{template1}... {template2}"
+        ];
+
+        function getRandomElement(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        function getMultipleRandom(array, num) {
+            const shuffled = [...array].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, num);
+        }
+
+        function generateBasicQuote(topic) {
+            const template = getRandomElement(templates);
+            const aesthetic = getRandomElement(aestheticWords);
+            const power = getRandomElement(powerWords);
+            const slang = getRandomElement(internetSlang);
+
+            return template
+                .replace('{topic}', topic)
+                .replace('{aesthetic}', aesthetic)
+                .replace('{power}', power)
+                .replace('{slang}', slang);
+        }
+
+        function generateComplexQuote(topic) {
+            const compoundTemplate = getRandomElement(compoundTemplates);
+            const quote1 = generateBasicQuote(topic);
+            const quote2 = generateBasicQuote(topic);
+            const conjunction = getRandomElement(conjunctions);
+
+            return compoundTemplate
+                .replace('{template1}', quote1)
+                .replace('{template2}', quote2)
+                .replace('{conjunction}', conjunction)
+                .replace('{slang}', getRandomElement(internetSlang));
+        }
+
+        function simulateAIThinking() {
+            const quoteContainer = document.getElementById('quoteContainer');
+            quoteContainer.classList.add('loading');
+            
+            // Random delay between 0.5 and 1.5 seconds
+            const delay = Math.random() * 1000 + 500;
+            return new Promise(resolve => setTimeout(resolve, delay));
+        }
+
+        async function generateQuote() {
+            const topic = document.getElementById('topicInput').value.trim() || 'prosperity';
+            const quoteContainer = document.getElementById('quoteContainer');
+            
+            // Show loading state
+            quoteContainer.classList.add('loading');
+            await simulateAIThinking();
+            
+            // Randomly choose between simple and complex quotes
+            const quote = Math.random() > 0.5 ? 
+                generateBasicQuote(topic) : 
+                generateComplexQuote(topic);
+
+            quoteContainer.textContent = `「 ${quote} 」`;
+            quoteContainer.classList.remove('loading');
+            quoteContainer.classList.add('visible');
+        }
+
+        function copyQuote() {
+            const quoteText = document.getElementById('quoteContainer').textContent;
+            navigator.clipboard.writeText(quoteText).then(() => {
+                const copyBtn = document.querySelector('.copy-btn');
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalText;
+                }, 2000);
+            });
+        }
+
+        // Generate initial quote
+        generateQuote();
+    </script>
+</body>
+</html>
