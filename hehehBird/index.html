@@ -4,23 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>heheh bird</title>
+    <title>Flappy Heheh</title>
     <link rel="stylesheet" href="style.css" > 
     <link href="https://fonts.googleapis.com/css?family=Squada+One&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
     <link rel="icon" href="heheh.png" type="image/png">
-
-
 </head>
 <body>
-    <button onclick="window.location.href='../'" target="_blank">back to mememaker</button>
-
-    <canvas id="canvas" width="276" height="414"></canvas>
+    <div class="canvas-wrapper">
+        <canvas id="canvas" width="276" height="414"></canvas> 
+        <div class="high-score-tracker">
+            <span class="high-score-label">High Score:</span>
+            <span id="high-score-value">0</span>                                                                                     
+        </div>
+        <button id="backToMememaker" onclick="window.location.href='../'">Mememaker</button>
+        <a id="shareButton" href="https://x.com/i/communities/1829122365411696783" target="_blank">Share</a>
+    </div>
     <script src="game.js"></script>
-    <h2>
-        Post your high score in <br> the heheh community 
-        <a href="https://x.com/i/communities/1829122365411696783" target="_blank" rel="noopener noreferrer">here</a>
-    </h2>
     </body>
 </html>

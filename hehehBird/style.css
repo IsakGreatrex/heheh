@@ -1,9 +1,74 @@
-#canvas
-{
-    background-color:#30c0df;
-    border: 2px solid black;
-    display: block;
-    margin: auto;
-    padding: auto;
-    
+body {
+  margin: 0; /* Remove default body margins */
+}
+
+.canvas-wrapper {
+  width: 100vw;
+  height: 100vh; /* Ensure wrapper takes up full viewport height and width */
+  margin: 0; /* Remove default margins */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black; /* Set background color here */
+}
+
+#canvas {
+  background-color: #30c0df;
+  border: 2px solid black;
+  display: block;
+  width: calc(100vw * 0.6); /* Adjust the multiplier as needed */
+  max-width: 400px; /* Increase max-width */
+  height: auto;
+}
+
+.high-score-tracker {
+  position: absolute;
+  top: 20px; /* Adjust as needed */
+  left: 20px; /* Adjust as needed */
+  color: white;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 16px;
+}
+
+.high-score-label {
+  margin-right: 5px;
+}
+#backToMememaker {                                                                      
+  position: absolute;                                                                     
+  bottom: 10px; /* Adjust as needed */                                                    
+  left: 10px; /* Adjust as needed */                                                      
+  color: rgb(255, 255, 255);                                                                           
+  font-family: 'Press Start 2P', monospace;                                               
+  font-size: 12px;                                                                        
+  background-color: rgba(125, 216, 27, 0.7); /* Semi-transparent black background */           
+  border: none;                                                                           
+  padding: 5px 5px;                                                                     
+  border-radius: 5px; /* Optional: Rounded corners */                                     
+  cursor: pointer;
+  text-align: center;                                                                        
+}
+#backToMememaker:hover {                                                                  
+  background-color: rgba(146, 232, 88, 0.9); /* Even darker background on hover */             
+  border-color: rgb(255, 255, 0); /* Brighter yellow on hover */                          
+}
+#shareButton {                                                                            
+  position: absolute;                                                                     
+  bottom: 10px;                                                                           
+  left: 190px; /* Adjust as needed */                                                     
+  color: white;                                                                           
+  font-family: 'Press Start 2P', monospace;                                               
+  font-size: 12px;                                                                        
+  background-color: rgba(48, 94, 221, 0.7); /* Semi-transparent black background */           
+  border: none;                                
+  padding: 5px 5px;                                                                     
+  border-radius: 5px; /* Optional: Rounded corners */                                     
+  cursor: pointer;                                                                        
+  text-align: center;
+  text-decoration: none;                                                                     
+}                                                                                         
+                                                                                          
+#shareButton:hover {                                                                      
+  background-color: rgba(97, 137, 237, 0.9); /* Even darker background on hover */             
+  border-color: rgb(255, 255, 0); /* Brighter yellow on hover */                          
 }
